@@ -2579,6 +2579,7 @@ export default {
 }
 
 .modal-content {
+  transform: translateZ(0);
   background-color: var(--card-background);
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
