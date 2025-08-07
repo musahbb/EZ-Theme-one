@@ -109,7 +109,7 @@ export default {
     passwordMatchError: 'Пароли не совпадают',
     captchaSuccess: 'Капча пройдена успешно',
     captchaFailed: 'Ошибка капчи',
-    
+
     loginNow: 'Войти сейчас',
     resetNow: 'Сбросить пароль',
     alreadyHaveAccount: 'Уже есть аккаунт?',
@@ -212,7 +212,7 @@ export default {
     deviceLimit: 'Лимит устройств',
     unlimited: 'Без ограничений',
     nextResetTime: 'Время следующего сброса',
-    
+
     importTitle: 'Выберите способ импорта',
     copySubscription: 'Копировать адрес подписки',
     copySubscriptionDesc: 'Копировать ссылку подписки в буфер обмена',
@@ -316,11 +316,11 @@ export default {
   tickets: {
     title: 'Система тикетов',
     description: 'Свяжитесь с нашей службой поддержки',
-    
+
     searchPlaceholder: 'Поиск тикетов...',
     newTicket: 'Новый тикет',
     createNew: 'Создать тикет',
-    
+
     subject: 'Тема',
     subjectPlaceholder: 'Введите тему тикета',
     message: 'Сообщение',
@@ -329,30 +329,30 @@ export default {
     levelLow: 'Низкий',
     levelMedium: 'Средний',
     levelHigh: 'Высокий',
-    
+
     statusOpen: 'В обработке',
     statusClosed: 'Закрыт',
-    
+
     noTickets: 'Нет тикетов',
     selectTicket: 'Выберите тикет для просмотра деталей',
     noMessages: 'Нет сообщений',
     loadingMessages: 'Загрузка сообщений...',
     loadingTickets: 'Загрузка тикетов...',
-    
+
     formIncomplete: 'Заполните все поля тикета',
     createSuccess: 'Тикет создан успешно',
     createError: 'Ошибка создания тикета',
     fetchError: 'Ошибка получения списка тикетов',
     fetchDetailError: 'Ошибка получения деталей тикета',
-    
+
     replyPlaceholder: 'Введите текст ответа...',
     send: 'Отправить',
     replySent: 'Ответ отправлен',
     replyError: 'Ошибка отправки ответа',
-    
+
     admin: 'Служба поддержки',
     you: 'Я',
-    
+
     closeTicket: 'Закрыть тикет',
     closeConfirmTitle: 'Подтвердить закрытие тикета',
     closeConfirmText: 'Вы уверены, что хотите закрыть тикет? После закрытия ответить будет невозможно.',
@@ -360,13 +360,13 @@ export default {
     closeError: 'Ошибка закрытия тикета',
     ticketClosed: 'Тикет закрыт, ответить нельзя',
     closing: 'Закрытие...',
-    
+
     createdAt: 'Дата создания',
-    
+
     smallScreenNotice: 'Обнаружен маленький экран',
     switchToMobile: 'Для лучшего опыта переключитесь на мобильный вид',
     switchToMobileView: 'Переключиться на мобильный вид',
-    
+
     largeScreenNotice: 'Обнаружен большой экран',
     switchToDesktop: 'Рекомендуется использовать настольную версию для лучшего опыта',
     switchToDesktopView: 'Переключиться на настольный вид',
@@ -637,10 +637,11 @@ export default {
     title: 'Мои комиссии',
     description: 'Приглашайте друзей и получайте комиссионные.',
     stats: {
-      registeredUsers: 'Зарегистрировано пользователей',
-      pendingCommission: 'Ожидающие комиссии',
-      availableCommission: 'Полученные комиссии',
-      commissionRate: 'Процент комиссии'
+      registeredUsers: 'Зарегистрированные пользователи',
+      validCommission: 'Всего заработанная комиссия',
+      pendingCommission: 'Комиссия в обработке',
+      commissionRate: 'Комиссионная ставка',
+      availableCommission: 'Доступная комиссия'
     },
     rules: {
       title: 'Правила комиссии',

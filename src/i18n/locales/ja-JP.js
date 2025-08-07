@@ -109,7 +109,7 @@ export default {
     passwordMatchError: 'パスワードが一致しません',
     captchaSuccess: '認証成功',
     captchaFailed: '認証失敗',
-    
+
     loginNow: '今すぐログイン',
     resetNow: 'パスワードリセット',
     alreadyHaveAccount: 'アカウントをお持ちですか？',
@@ -212,7 +212,7 @@ export default {
     deviceLimit: 'オンライン機器',
     unlimited: '無制限',
     nextResetTime: '次回リセット時間',
-    
+
     importTitle: 'インポート方法選択',
     copySubscription: 'サブスクリプションアドレスをコピー',
     copySubscriptionDesc: 'サブスクリプションリンクをクリップボードにコピー',
@@ -316,11 +316,11 @@ export default {
   tickets: {
     title: 'チケットシステム',
     description: 'サポートチームに連絡',
-    
+
     searchPlaceholder: 'チケット検索...',
     newTicket: '新規チケット',
     createNew: 'チケット作成',
-    
+
     subject: '主題',
     subjectPlaceholder: 'チケットの主題を入力',
     message: '内容',
@@ -329,30 +329,30 @@ export default {
     levelLow: '低',
     levelMedium: '中',
     levelHigh: '高',
-    
+
     statusOpen: '処理中',
     statusClosed: '閉鎖済み',
-    
+
     noTickets: 'チケットなし',
     selectTicket: 'チケットを選択して詳細を見る',
     noMessages: 'メッセージ記録なし',
     loadingMessages: 'メッセージ読み込み中...',
     loadingTickets: 'チケット読み込み中...',
-    
+
     formIncomplete: 'チケット情報をすべて入力してください',
     createSuccess: 'チケット作成成功',
     createError: 'チケット作成失敗',
     fetchError: 'チケットリスト取得失敗',
     fetchDetailError: 'チケット詳細取得失敗',
-    
+
     replyPlaceholder: '返信内容を入力...',
     send: '送信',
     replySent: '返信送信済み',
     replyError: '返信送信失敗',
-    
+
     admin: 'カスタマーサービス',
     you: '私',
-    
+
     closeTicket: 'チケット閉鎖',
     closeConfirmTitle: 'チケット閉鎖確認',
     closeConfirmText: 'このチケットを閉鎖しますか？閉鎖後は返信できません。',
@@ -360,13 +360,13 @@ export default {
     closeError: 'チケット閉鎖失敗',
     ticketClosed: 'このチケットは閉鎖済みで返信できません',
     closing: '閉鎖中...',
-    
+
     createdAt: '作成日',
-    
+
     smallScreenNotice: '小さい画面のデバイスを検出',
     switchToMobile: 'より良い体験のためにモバイルビューに切り替えることを推奨',
     switchToMobileView: 'モバイルビューに切り替え',
-    
+
     largeScreenNotice: '大きい画面を検出',
     switchToDesktop: 'より良い体験のためにデスクトップビューを使用することを推奨',
     switchToDesktopView: 'デスクトップビューに切り替え',
@@ -638,9 +638,10 @@ export default {
     description: '友達を招待して登録させ、コミッションを獲得。',
     stats: {
       registeredUsers: '登録ユーザー数',
+      validCommission: '累計獲得コミッション',
       pendingCommission: '確認中のコミッション',
-      availableCommission: '累計獲得コミッション',
-      commissionRate: 'コミッション率'
+      commissionRate: 'コミッション率',
+      availableCommission: '現在の利用可能コミッション'
     },
     rules: {
       title: 'リベートルール',
