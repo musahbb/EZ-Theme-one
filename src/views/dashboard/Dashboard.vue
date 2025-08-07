@@ -191,7 +191,7 @@
               </button>
               <!-- 重置流量按钮 - 根据配置和流量状态显示 -->
               <button
-                  v-if="showResetTrafficButton"
+                  v-if="showResetTrafficButton && !isExpired"
                   class="btn-outline reset-traffic-btn"
                   :class="{
                   'reset-warning': isLowTraffic && !isTrafficDepleted,
@@ -526,11 +526,17 @@
               <IconCalendar :size="32"/>
             </div>
             <div class="stats-info">
-              <div class="stats-value">
-                {{
-                  userStats.isRemainingDaysPermanent ? $t('dashboard.permanent') : userStats.remainingDays + $t('dashboard.days')
-                }}
-              </div>
+             <div class="stats-value">
+            {{
+              userStats.isRemainingDaysPermanent 
+                ? $t('dashboard.permanent') 
+                : (parseInt(userStats.remainingDays) <= 0 
+                    ? '已过期' 
+                    : (parseInt(userStats.remainingDays) <= DASHBOARD_CONFIG.expiringThreshold 
+                        ? '<' + userStats.remainingDays + ' ' + $t('dashboard.days') 
+                        : userStats.remainingDays + ' ' + $t('dashboard.days')))
+            }}
+          </div>
               <div class="stats-label">{{ $t('dashboard.remainingDays') }}</div>
             </div>
           </div>
@@ -1349,24 +1355,6 @@ export default {
           if (subscribe.alive_ip !== undefined) {
             userPlan.value.aliveIp = subscribe.alive_ip;
           }
-
-          if (subscribe.expired_at) {
-            const now = new Date();
-            const expiredDate = new Date(subscribe.expired_at * 1000);
-            const diffTime = expiredDate - now;
-
-            if (diffTime <= 0) {
-              userStats.remainingDays = '0';
-              userStats.isRemainingDaysPermanent = false;
-            } else {
-              const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-              userStats.remainingDays = `${diffDays}`;
-              userStats.isRemainingDaysPermanent = false;
-            }
-          } else {
-            userStats.remainingDays = null;
-            userStats.isRemainingDaysPermanent = true;
-          }
         }
       } catch (error) {
         console.error('获取订阅信息失败:', error);
@@ -1606,10 +1594,10 @@ export default {
             url = `surge:///install-config?url=${encodeURIComponent(subscribeUrl)}&name=${siteName}`;
             break;
           case 'flclash':
-            url = `clash://install-config?url=${encodeURIComponent(subscribeUrl) + '&flag=meta'}&name=${siteName}`;
+            url = `clash://install-config?url=${encodeURIComponent(subscribeUrl)}`;
             break;
           case 'clashverge':
-            url = `clash://install-config?url=${encodeURIComponent(subscribeUrl) + '&flag=meta'}&name=${siteName}`;
+            url = `clash://install-config?url=${encodeURIComponent(subscribeUrl)}`;
             break;
           case 'nekobox':
             url = `clash://install-config?url=${encodeURIComponent(subscribeUrl) + '&flag=meta'}&name=${siteName}`;
@@ -3763,6 +3751,7 @@ export default {
 }
 
 .notice-modal {
+  transform: translateZ(0);
   width: 100%;
   max-width: 500px;
   background-color: rgba(var(--card-background-rgb, 255, 255, 255), 1);
