@@ -832,7 +832,8 @@ export default {
   wallet: {
     balance: {
       title: 'Баланс аккаунта',
-      description: 'Пополненный баланс только для покупок'
+      description: 'Пополненный баланс только для покупок',
+      autorenew: 'Автопродление'
     },
     deposit: {
       title: 'Пополнить баланс',

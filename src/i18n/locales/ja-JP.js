@@ -832,7 +832,8 @@ export default {
   wallet: {
     balance: {
       title: 'アカウント残高',
-      description: 'チャージ後の残高は消費専用です'
+      description: 'チャージ後の残高は消費専用です',
+      autorenew: '自動更新'
     },
     deposit: {
       title: '残高チャージ',

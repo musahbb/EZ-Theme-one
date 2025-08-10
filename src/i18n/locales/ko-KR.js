@@ -833,7 +833,8 @@ export default {
   wallet: {
     balance: {
       title: '계정 잔액',
-      description: '충전된 잔액은 소비 전용입니다'
+      description: '충전된 잔액은 소비 전용입니다',
+      autorenew: '자동 갱신'
     },
     deposit: {
       title: '잔액 충전',

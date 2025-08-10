@@ -837,7 +837,8 @@ export default {
     wallet: {
         balance: {
             title: '账户余额',
-            description: '充值后的余额仅限消费'
+            description: '充值后的余额仅限消费',
+            autorenew: '自动续费'
         },
         deposit: {
             title: '充值余额',
