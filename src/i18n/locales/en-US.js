@@ -837,7 +837,8 @@ export default {
     wallet: {
         balance: {
             title: 'Account Balance',
-            description: 'Deposited balance can only be used for spending'
+            description: 'Deposited balance can only be used for spending',
+            autorenew: 'Auto-renewal'
         },
         deposit: {
             title: 'Deposit Balance',

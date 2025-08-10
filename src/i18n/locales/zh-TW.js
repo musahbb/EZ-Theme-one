@@ -828,7 +828,8 @@ export default {
   wallet: {
     balance: {
       title: '帳戶餘額',
-      description: '充值後的餘額僅限消費'
+      description: '充值後的餘額僅限消費',
+      autorenew: '自動續費'
     },
     deposit: {
       title: '充值餘額',

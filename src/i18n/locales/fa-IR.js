@@ -641,7 +641,8 @@ export default {
       validCommission: 'کل کمیسیون کسب شده',
       pendingCommission: 'کمیسیون در انتظار',
       commissionRate: 'نرخ کمیسیون',
-      availableCommission: 'کمیسیون موجود'
+      availableCommission: 'کمیسیون موجود',
+      autorenew: 'تمدید خودکار'
     },
     rules: {
       title: 'قوانین کمیسیون',
