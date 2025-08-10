@@ -58,7 +58,7 @@
     <BackToTop />
     
     <!-- 自定义鼠标右键菜单 -->
-    <CustomContextMenu />
+    <CustomContextMenu v-if="siteConfig.enableCustomContextMenu" />
     
     <!-- 客服图标 -->
     <CustomerServiceIcon v-if="$route.path !== '/customer-service'" />

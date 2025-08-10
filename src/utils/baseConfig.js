@@ -14,7 +14,7 @@ const getConfig = (key, defaultValue) => {
 const mergeDeep = (target, source) => {
   if (!source) return target;
   const output = { ...target };
-  
+
   if (isObject(target) && isObject(source)) {
     Object.keys(source).forEach(key => {
       if (isObject(source[key])) {
@@ -65,20 +65,38 @@ export const getApiBaseUrl = () => {
       // 使用中间件URL和路径
       const middlewareUrl = window.EZ_CONFIG.API_MIDDLEWARE_URL.trim();
       const middlewarePath = window.EZ_CONFIG.API_MIDDLEWARE_PATH;
-      
+
       // 确保URL末尾没有斜杠，且路径开头有斜杠，防止出现重复或缺少斜杠
       const formattedUrl = middlewareUrl.endsWith('/') ? middlewareUrl.slice(0, -1) : middlewareUrl;
       const formattedPath = middlewarePath.startsWith('/') ? middlewarePath : `/${middlewarePath}`;
-      
+
       return formattedUrl + formattedPath;
     }
-    
+
     // 然后检查是否存在API_CONFIG
     if (window.EZ_CONFIG.API_CONFIG) {
       const apiConfig = window.EZ_CONFIG.API_CONFIG;
+
+      let effectiveUrlMode = apiConfig.urlMode;
+      // 新增mix模式逻辑
+      if (apiConfig.urlMode === 'mix') {
+        try {
+          const currentHostname = window.location.hostname;
+          const staticOrigins = apiConfig.staticOriginUrl || [];
+          if (staticOrigins.includes(currentHostname)) {
+            effectiveUrlMode = 'static';
+          } else {
+            effectiveUrlMode = 'auto';
+          }
+        } catch (error) {
+          console.error('mix模式域名检查失败:', error);
+          // 发生错误时，默认回退到 'auto' 模式
+          effectiveUrlMode = 'auto';
+        }
+      }
       
       // 静态URL模式
-      if (apiConfig.urlMode === 'static' && apiConfig.staticBaseUrl) {
+      if (effectiveUrlMode === 'static' && apiConfig.staticBaseUrl) {
         // 检查是否有经过API可用性检测的URL
         if (Array.isArray(apiConfig.staticBaseUrl) && apiConfig.staticBaseUrl.length > 1) {
           // 使用API可用性检测器获取可用的URL
@@ -95,31 +113,31 @@ export const getApiBaseUrl = () => {
         }
         // 如果staticBaseUrl是字符串，直接返回
         else if (typeof apiConfig.staticBaseUrl === 'string') {
-        return apiConfig.staticBaseUrl;
+          return apiConfig.staticBaseUrl;
         }
         // 如果staticBaseUrl不是字符串也不是数组，返回空字符串
         return '';
       }
-      
+
       // 自动获取模式
-      if (apiConfig.urlMode === 'auto' && apiConfig.autoConfig) {
+      if (effectiveUrlMode === 'auto' && apiConfig.autoConfig) {
         try {
           const currentUrl = new URL(window.location.href);
           let apiBaseUrl = '';
-          
+
           // 协议
           const protocol = apiConfig.autoConfig.useSameProtocol
             ? currentUrl.protocol
             : 'https:';
-          
+
           // 域名
           apiBaseUrl = `${protocol}//${currentUrl.host}`;
-          
+
           // API路径
           if (apiConfig.autoConfig.appendApiPath && apiConfig.autoConfig.apiPath) {
             apiBaseUrl += apiConfig.autoConfig.apiPath;
           }
-          
+
           return apiBaseUrl;
         } catch (error) {
           console.error('自动获取API URL失败:', error);
@@ -131,7 +149,7 @@ export const getApiBaseUrl = () => {
       }
     }
   }
-  
+
   return '';
 };
 
@@ -145,10 +163,10 @@ export const API_BASE_URL = getApiBaseUrl();
 const DEFAULT_SECURITY_CONFIG = {
   // 是否启用前端域名验证（前端域名检查，防止未授权域名访问）
   enableFrontendDomainCheck: false,
-  
+
   // 是否启用授权码验证
   enableLicenseCheck: true,
-  
+
   // 是否启用反调试功能（阻止开发者工具和F12调试）
   enableAntiDebugging: true
 };
@@ -170,13 +188,13 @@ export const AUTHORIZED_DOMAINS = getConfig('AUTHORIZED_DOMAINS', DEFAULT_AUTHOR
 const DEFAULT_CAPTCHA_CONFIG = {
   // 验证方式: 'google' 或 'cloudflare'
   captchaType: 'google',
-  
+
   // Google reCAPTCHA 配置 默认v2
   google: {
     // 验证API地址
     verifyUrl: 'https://www.google.com/recaptcha/api/siteverify'
   },
-  
+
   // Cloudflare Turnstile 配置
   cloudflare: {
     // 验证API地址
@@ -193,7 +211,7 @@ export const CAPTCHA_CONFIG = mergeDeep(DEFAULT_CAPTCHA_CONFIG, getConfig('CAPTC
 const DEFAULT_CUSTOM_HEADERS_CONFIG = {
   // 是否启用自定义标头
   enabled: false,
-  
+
   // 自定义标头列表
   headers: {}
 };
@@ -202,13 +220,14 @@ export const CUSTOM_HEADERS_CONFIG = mergeDeep(DEFAULT_CUSTOM_HEADERS_CONFIG, ge
 
 // 网站名称配置
 const DEFAULT_SITE_CONFIG = {
+  enableCustomContextMenu: true,
   siteName: 'EZ THEME',
   siteDescription: 'EZ UI',
   copyright: `© ${new Date().getFullYear()} EZ THEME. All Rights Reserved.`,
-  
+
   // 是否显示标题中的网站Logo (true=显示, false=隐藏)
   showLogo: true,
-  
+
   // Landing页面多语言标语
   landingText: {
     'zh-CN': '探索全球网络无限可能',
@@ -219,7 +238,7 @@ const DEFAULT_SITE_CONFIG = {
     'ru-RU': 'Исследуйте безграничные возможности глобальной сети',
     'fa-IR': 'امکانات نامحدود شبکه جهانی را کاوش کنید'
   },
-  
+
   // 自定义landing页面路径（相对于public目录）
   customLandingPage: ''
 };
@@ -230,7 +249,7 @@ export const SITE_CONFIG = mergeDeep(DEFAULT_SITE_CONFIG, getConfig('SITE_CONFIG
 const DEFAULT_BASE_CONFIG = {
   // 默认语言 ('zh-CN' 或 'en-US') TODO
   defaultLanguage: 'zh-CN',
-  
+
   // 默认主题 ('light' 或 'dark') TODO
   defaultTheme: 'dark',
 
@@ -249,28 +268,28 @@ export const DEFAULT_CONFIG = mergeDeep(DEFAULT_BASE_CONFIG, getConfig('DEFAULT_
 const DEFAULT_PAYMENT_CONFIG = {
   // 是否在新标签页打开支付链接 (true=新标签页打开, false=当前页面打开)
   openPaymentInNewTab: true,
-  
+
   // 支付二维码大小 (像素)
   qrcodeSize: 200,
-  
+
   // 支付二维码的颜色
   qrcodeColor: '#000000',
-  
+
   // 支付二维码的背景色
   qrcodeBackground: '#ffffff',
-  
+
   // 是否自动检测支付状态 (true=启用自动检测, false=手动检测)
   autoCheckPayment: true,
-  
+
   // 自动检测支付状态的间隔时间 (毫秒)
   autoCheckInterval: 5000,
-  
+
   // 自动检测支付状态的最大次数 (设置为0表示无限次)
   autoCheckMaxTimes: 30,
-  
+
   // 是否对Safari浏览器使用支付弹窗模式，而不是直接跳转 (true=使用弹窗, false=直接跳转)
   useSafariPaymentModal: true,
-  
+
   // 是否自动选择第一个支付方式 (true=自动选择, false=需要用户手动选择)
   autoSelectFirstMethod: true
 };
@@ -284,7 +303,7 @@ export const PAYMENT_CONFIG = mergeDeep(DEFAULT_PAYMENT_CONFIG, getConfig('PAYME
 const DEFAULT_PROFILE_CONFIG = {
   // 是否显示礼品卡兑换栏目 (true=显示, false=隐藏) TODO
   showGiftCardRedeem: false,
-  
+
   // 是否显示最近登录设备栏目 (true=显示, false=隐藏)
   showRecentDevices: true
 };
@@ -317,7 +336,7 @@ export const TICKET_CONFIG = mergeDeep(DEFAULT_TICKET_CONFIG, getConfig('TICKET_
 const DEFAULT_TRAFFICLOG_CONFIG = {
   // 是否启用流量明细页面 (true=启用, false=禁用)
   enableTrafficLog: true,
-  
+
   // 显示多少天的流量记录
   daysToShow: 30
 };
@@ -349,7 +368,7 @@ const DEFAULT_CLIENT_CONFIG = {
     linux: 'https://github.com/xxx/releases/latest',     // Linux客户端下载链接
     openwrt: 'https://github.com/xxx/releases/latest'  // OpenWrt客户端下载链接
   },
-  
+
   // ===========================================================
 
   // 订阅导入客户端显示控制
@@ -361,7 +380,7 @@ const DEFAULT_CLIENT_CONFIG = {
   showHiddifyIOS: true,     // Hiddify for IOS
   showSingboxIOS: true,     // SingBox for iOS
   showLoon: true,           // Loon
-  
+
   // Android平台客户端
   showFlClashAndroid: true,   // FlClash for Android
   showV2rayNG: true,          // V2rayNG
@@ -371,7 +390,7 @@ const DEFAULT_CLIENT_CONFIG = {
   showNekobox: true,          // Nekobox
   showSingboxAndroid: true,   // SingBox for Android
   showHiddifyAndroid: true,   // Hiddify for Android
-  
+
   // Windows平台客户端
   showFlClashWindows: true,   // FlClash for Windows
   showClashVergeWindows: true,// ClashVerge for Windows
@@ -379,7 +398,7 @@ const DEFAULT_CLIENT_CONFIG = {
   showNekoray: true,          // Nekoray
   showSingboxWindows: true,   // SingBox for Windows
   showHiddifyWindows: true,   // Hiddify for Windows
-  
+
   // MacOS平台客户端
   showFlClashMac: true,       // FlClash for Mac
   showClashVergeMac: true,    // ClashVerge for Mac
@@ -390,9 +409,9 @@ const DEFAULT_CLIENT_CONFIG = {
   showQuantumultXMac: true,   // QuantumultX for Mac
   showSingboxMac: true,       // SingBox for Mac
   showHiddifyMac: true        // Hiddify for Mac
-}; 
+};
 
-export const CLIENT_CONFIG = mergeDeep(DEFAULT_CLIENT_CONFIG, getConfig('CLIENT_CONFIG')); 
+export const CLIENT_CONFIG = mergeDeep(DEFAULT_CLIENT_CONFIG, getConfig('CLIENT_CONFIG'));
 
 /**
  * 商店页面配置
@@ -401,22 +420,22 @@ export const CLIENT_CONFIG = mergeDeep(DEFAULT_CLIENT_CONFIG, getConfig('CLIENT_
 const DEFAULT_SHOP_CONFIG = {
   // 是否在商店导航上显示热销标记
   showHotSaleBadge: true,
-  
+
   // 是否显示套餐特性卡片 (true=显示, false=隐藏)
   showPlanFeatureCards: true,
-  
+
   // 是否自动选择周期最大的标签，设为false则不会自动选择
   autoSelectMaxPeriod: false,
-  
+
   // 是否隐藏周期选择标签 (true=隐藏, false=显示)
   hidePeriodTabs: false,
-  
+
   // 库存紧张的阈值（当库存数量小于等于此值且大于0时显示库存紧张）
   lowStockThreshold: 5,
-  
+
   // 是否启用周期折扣计算显示 (true=启用, false=禁用)
   enableDiscountCalculation: true,
-  
+
   // 价格周期的显示顺序（从大到小）
   periodOrder: [
     'three_year_price', // 三年
@@ -427,21 +446,21 @@ const DEFAULT_SHOP_CONFIG = {
     'month_price',      // 月付
     'onetime_price'     // 一次性
   ],
-  
+
   // 商店弹窗配置
   popup: {
     // 是否启用弹窗
     enabled: false,
-    
+
     // 弹窗标题
     title: "",
-    
+
     // 弹窗内容 (支持HTML)
     content: "",
-    
+
     // 冷却时间（小时），在此时间内不会再次显示弹窗
     cooldownHours: 2,
-    
+
     // 等待时间（秒），用户需要等待多少秒才能关闭弹窗，设为0表示无需等待
     closeWaitSeconds: 0
   }
@@ -449,7 +468,7 @@ const DEFAULT_SHOP_CONFIG = {
 
 export const SHOP_CONFIG = mergeDeep(DEFAULT_SHOP_CONFIG, getConfig('SHOP_CONFIG'));
 
-  // ===========================================================
+// ===========================================================
 
 
 
@@ -465,7 +484,7 @@ const DEFAULT_ORDER_CONFIG = {
   confirmOrderContent: "<p>您确定要购买该套餐吗？</p>",
 };
 export const ORDER_CONFIG = mergeDeep(DEFAULT_ORDER_CONFIG, getConfig('ORDER_CONFIG'));
-  
+
 
 // ===========================================================
 
@@ -477,25 +496,25 @@ export const ORDER_CONFIG = mergeDeep(DEFAULT_ORDER_CONFIG, getConfig('ORDER_CON
 const DEFAULT_DASHBOARD_CONFIG = {
   // 是否在欢迎卡片中显示用户邮箱 (true=显示, false=隐藏)
   showUserEmail: true,
-  
+
   // 是否为导入订阅按钮添加高光效果和填充底色 (true=添加效果, false=不添加效果)
   importButtonHighlightBtnbgcolor: true,
 
   // 是否启用重置流量功能 (true=启用, false=禁用)
   enableResetTraffic: true,
-  
+
   // 重置流量按钮显示条件 ('always'=始终显示, 'low'=流量低于阈值时显示, 'depleted'=流量耗尽时显示)
   resetTrafficDisplayMode: 'low',
-  
+
   // 低流量阈值百分比 (1-100)，当剩余流量百分比低于此值时触发低流量警告
   lowTrafficThreshold: 10,
-  
+
   // 是否启用续费套餐功能 (true=启用, false=禁用)
   enableRenewPlan: true,
-  
+
   // 续费套餐按钮显示条件 ('always'=始终显示, 'expiring'=套餐即将到期时显示, 'expired'=套餐已过期时显示)
   renewPlanDisplayMode: 'always',
-  
+
   // 即将过期的天数阈值 (1-30)，当剩余天数小于等于此值时触发即将过期警告
   expiringThreshold: 7,
 
@@ -515,17 +534,17 @@ const hexToRgb = (hex) => {
   if (typeof hex !== 'string') {
     hex = String(hex);
   }
-  
+
   // 去除空格
   hex = hex.trim();
-  
+
   // 处理缩写形式的颜色值（例如#FFF -> #FFFFFF）
   const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
   hex = hex.replace(shorthandRegex, (m, r, g, b) => r + r + g + g + b + b);
-  
+
   // 正则匹配完整的十六进制颜色值
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  
+
   if (result) {
     return [
       parseInt(result[1], 16),
@@ -558,7 +577,7 @@ const calculateThemeColors = (primaryColor) => {
 const DEFAULT_THEME_CONFIG = {
   // 默认主题（light或dark）
   defaultTheme: DEFAULT_CONFIG.defaultTheme,
-  
+
   // 主题颜色变量
   light: {
     ...calculateThemeColors(DEFAULT_CONFIG.primaryColor),
@@ -569,7 +588,7 @@ const DEFAULT_THEME_CONFIG = {
     borderColor: '#e8e8e8',
     shadowColor: 'rgba(0, 0, 0, 0.1)'
   },
-  
+
   dark: {
     ...calculateThemeColors(DEFAULT_CONFIG.primaryColor),
     backgroundColor: '#171A1D',
@@ -615,7 +634,7 @@ export const BACKGROUND_BALLS_CONFIG = getConfig('BACKGROUND_BALLS_CONFIG', DEFA
 const DEFAULT_BROWSER_RESTRICT_CONFIG = {
   // 是否启用浏览器限制功能
   enabled: false,
-  
+
   // 各浏览器是否被限制访问（true=限制访问，false=允许访问）
   restrictBrowsers: {
     '360': true,     // 360浏览器
@@ -626,7 +645,7 @@ const DEFAULT_BROWSER_RESTRICT_CONFIG = {
     'UC': false,     // UC浏览器
     'Maxthon': false // 傲游浏览器
   },
-  
+
   // 推荐下载的浏览器链接
   recommendedBrowsers: {
     'Chrome': 'https://www.google.cn/chrome/',
@@ -642,67 +661,67 @@ export const BROWSER_RESTRICT_CONFIG = mergeDeep(DEFAULT_BROWSER_RESTRICT_CONFIG
  */
 export const detectBrowser = () => {
   const ua = navigator.userAgent.toLowerCase();
-  
+
   // 检测微信浏览器
   if (ua.indexOf('micromessenger') !== -1) {
     return 'WeChat';
   }
-  
+
   // 检测QQ浏览器
   if (ua.indexOf('qqbrowser') !== -1 || ua.indexOf(' qq') !== -1 && ua.indexOf('mqqbrowser') !== -1) {
     return 'QQ';
   }
-  
+
   // 检测360浏览器 (不同版本有不同标识)
   if (
-    ua.indexOf('qihu') !== -1 || 
-    ua.indexOf('360ee') !== -1 || 
+    ua.indexOf('qihu') !== -1 ||
+    ua.indexOf('360ee') !== -1 ||
     ua.indexOf('360se') !== -1 ||
     (ua.indexOf('chrome') !== -1 && (navigator.connection?.saveData === undefined) && (navigator.connection?.rtt === undefined))
   ) {
     return '360';
   }
-  
+
   // 检测百度浏览器
   if (ua.indexOf('bidubrowser') !== -1 || ua.indexOf('baidubrowser') !== -1) {
     return 'Baidu';
   }
-  
+
   // 检测搜狗浏览器
   if (ua.indexOf('metasr') !== -1 || ua.indexOf('sogou') !== -1) {
     return 'Sogou';
   }
-  
+
   // 检测UC浏览器
   if (ua.indexOf('ucbrowser') !== -1 || ua.indexOf('ucweb') !== -1) {
     return 'UC';
   }
-  
+
   // 检测傲游浏览器
   if (ua.indexOf('maxthon') !== -1) {
     return 'Maxthon';
   }
-  
+
   // 检测Edge浏览器
   if (ua.indexOf('edg') !== -1) {
     return 'Edge';
   }
-  
+
   // 检测Chrome浏览器
   if (ua.indexOf('chrome') !== -1) {
     return 'Chrome';
   }
-  
+
   // 检测Safari浏览器
   if (ua.indexOf('safari') !== -1) {
     return 'Safari';
   }
-  
+
   // 检测Firefox浏览器
   if (ua.indexOf('firefox') !== -1) {
     return 'Firefox';
   }
-  
+
   // 默认返回Unknown
   return 'Unknown';
 };
@@ -716,14 +735,14 @@ export const isBrowserRestricted = () => {
   if (!BROWSER_RESTRICT_CONFIG.enabled) {
     return false;
   }
-  
+
   const browserType = detectBrowser();
-  
+
   // 检查浏览器是否在限制列表中
   if (BROWSER_RESTRICT_CONFIG.restrictBrowsers[browserType]) {
     return true;
   }
-  
+
   return false;
 };
 
@@ -733,10 +752,10 @@ export const isBrowserRestricted = () => {
 const DEFAULT_WALLET_CONFIG = {
   // 预设充值金额选项（单位：元）
   presetAmounts: [6, 30, 68, 128, 256, 328, 648, 1280],
-  
+
   // 默认选中的充值金额（如果设为null则不预选金额）
   defaultSelectedAmount: null,
-  
+
   // 最小充值金额（单位：元）
   minimumDepositAmount: 1
 };
@@ -749,7 +768,7 @@ export const WALLET_CONFIG = mergeDeep(DEFAULT_WALLET_CONFIG, getConfig('WALLET_
 const DEFAULT_INVITE_CONFIG = {
   // 是否在导航栏的邀请按钮上显示返利标记
   showCommissionBadge: true,
-  
+
   // 返佣记录每页显示数量（最小值为10，API限制每次请求最少需要返回10条记录）
   recordsPerPage: 10,
   // 邀请链接配置
@@ -770,7 +789,7 @@ export const INVITE_CONFIG = mergeDeep(DEFAULT_INVITE_CONFIG, getConfig('INVITE_
 const DEFAULT_NODES_CONFIG = {
   // 是否显示节点倍率 (true=显示, false=隐藏)
   showNodeRate: true,
-  
+
   // 是否显示节点详细信息（主机和端口）
   showNodeDetails: false
 };
@@ -783,19 +802,19 @@ export const NODES_CONFIG = mergeDeep(DEFAULT_NODES_CONFIG, getConfig('NODES_CON
 const DEFAULT_CUSTOMER_SERVICE_CONFIG = {
   // 是否启用客服系统
   enabled: false,
-  
+
   // 客服系统类型: 'crisp' 或 'other'
   type: 'crisp',
-  
+
   // 客服系统HTML代码
   customHtml: '',
-  
+
   // 是否在未登录状态下也显示客服图标
   showWhenNotLoggedIn: true,
-  
+
   // 客服系统嵌入模式: 'popup'=弹出式页面, 'embed'=嵌入到每个页面(仅支持Crisp)
   embedMode: 'embed',
-  
+
   // 图标位置配置
   iconPosition: {
     // 桌面版图标距离左下角的距离
@@ -820,7 +839,7 @@ export const CUSTOMER_SERVICE_CONFIG = mergeDeep(DEFAULT_CUSTOMER_SERVICE_CONFIG
 const DEFAULT_MORE_PAGE_CONFIG = {
   // 是否启用自定义卡片功能
   enableCustomCards: true,
-  
+
   // 自定义卡片列表
   customCards: [
     // 示例自定义卡片
@@ -843,7 +862,7 @@ export const MORE_PAGE_CONFIG = mergeDeep(DEFAULT_MORE_PAGE_CONFIG, getConfig('M
 const DEFAULT_AUTH_LAYOUT_CONFIG = {
   // 布局类型: 'center' 为居中卡片布局, 'split' 为左右分栏布局
   layoutType: 'center',
-  
+
   // 左右分栏布局配置 (仅当 layoutType 为 'split' 时生效)
   splitLayout: {
     // 左侧区域内容配置

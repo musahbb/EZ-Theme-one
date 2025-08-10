@@ -22,9 +22,16 @@ window.EZ_CONFIG = {
   // 1. 静态URL: 直接指定API基础URL 末尾要加 /api/v1 !!!!!!!!!!!!!!! 除非你自己改过路由要不然别不加
   // 2. 自动获取: 从当前域名自动生成API基础URL
   API_CONFIG: {
-    // API URL获取方式: 'static'=使用静态URL, 'auto'=自动从当前域名获取
+    // API URL获取方式: 'static'=使用静态URL, 'auto'=自动从当前域名获取, 'mix'=混合模式
     urlMode: 'static',
-    
+
+    // 混合模式下的静态源域名列表 (urlMode = 'mix'时使用)
+    // 当访问域名在此列表中时，使用'static'模式，否则使用'auto'模式
+    staticOriginUrl: [
+      'localhost',
+      'test.eztheme.test'
+    ],
+
     // 静态URL模式下的基础URL (urlMode = 'static'时使用)
     // 支持字符串形式(单个API地址)或数组形式(多个备选API地址)
     // 多个地址时，会按顺序检测可用性，并使用第一个可用的地址
@@ -33,42 +40,43 @@ window.EZ_CONFIG = {
       'https://panghu.com/api/v1',
       'https://panghu.com/api/v1'
     ],
-    
+
     // 自动获取模式配置 (urlMode = 'auto'时使用)
     autoConfig: {
       // 是否使用相同协议 (http/https)
       useSameProtocol: true,
-      
+
       // 是否拼接API路径
       appendApiPath: true,
-      
+
       // API路径
       apiPath: '/api/v1'
     }
   },
-  
+
   // 是否启用中间件代理API请求
   // 设置为true时，所有API请求将通过中间件转发
   API_MIDDLEWARE_ENABLED: false,
-  
+
   // 中间件服务器URL (不含路径)
   API_MIDDLEWARE_URL: 'https://panghu.com',
-  
+
   // 中间件路由前缀 (与中间件服务器配置保持一致)
   API_MIDDLEWARE_PATH: '/ez/ez',
 
   //=======================================================
-  
+
   // ====================  网站基础配置  ====================
   SITE_CONFIG: {
+    enableCustomContextMenu: true,
     siteName: 'EZ THEME',
     siteDescription: 'EZ UI',
     // copyright会自动使用当前年份
     copyright: `© ${new Date().getFullYear()} EZ THEME. All Rights Reserved.`,
-    
+
     // 是否显示标题中的网站Logo (true=显示, false=隐藏)
     showLogo: true,
-    
+
     // Landing页面多语言标语
     landingText: {
       'zh-CN': '探索全球网络无限可能',
@@ -79,7 +87,7 @@ window.EZ_CONFIG = {
       'ru-RU': 'Исследуйте безграничные возможности глобальной сети',
       'fa-IR': 'امکانات نامحدود شبکه جهانی را کاوش کنید'
     },
-    
+
     // 自定义landing页面路径（相对于public目录
     // 例如：'testlandingpage.html'
     // 如果为空则不启用自定义landing页面
@@ -90,7 +98,7 @@ window.EZ_CONFIG = {
   DEFAULT_CONFIG: {
     // 默认语言 ('zh-CN' 或 'en-US')
     defaultLanguage: 'zh-CN',
-    
+
     // 默认主题 ('light' 或 'dark')
     defaultTheme: 'light',
 
@@ -105,30 +113,30 @@ window.EZ_CONFIG = {
   AUTH_CONFIG: {
     // 是否自动勾选同意条款复选框 (true=自动勾选, false=默认不勾选)
     autoAgreeTerms: true,
-    
+
     // 验证码相关配置
     verificationCode: {
       // 是否在发送验证码后显示检查垃圾邮件的提示 (true=显示, false=不显示)
       showCheckSpamTip: true,
-      
+
       // 显示检查垃圾邮件提示的延迟时间(毫秒)
       checkSpamTipDelay: 1000
     },
-    
+
     // 认证页面弹窗公告配置
     popup: {
       // 是否启用弹窗
       enabled: false,
-      
+
       // 弹窗标题
       title: "用户须知 (可自定义开启)",
-      
+
       // 弹窗内容 (支持HTML)
       content: "<p><strong>欢迎使用我们的服务！</strong></p><p>请注意以下事项：</p><ul><li>请妥善保管您的账号信息</li><li>如有问题请联系客服</li></ul>",
-      
+
       // 冷却时间（小时），在此时间内不会再次显示弹窗
       cooldownHours: 0,
-      
+
       // 等待时间（秒），用户需要等待多少秒才能关闭弹窗，设为0表示无需等待
       closeWaitSeconds: 3
     }
@@ -138,14 +146,14 @@ window.EZ_CONFIG = {
   AUTH_LAYOUT_CONFIG: {
     // 布局类型: 'center' 为居中卡片布局, 'split' 为左右分栏布局
     layoutType: 'center',
-    
+
     // 左右分栏布局配置 (仅当 layoutType 为 'split' 时生效)
     splitLayout: {
       // 左侧区域内容配置
       leftContent: {
         // 左侧背景图片URL或路径 (如不设置则不设置图片背景)
         backgroundImage: 'https://www.loliapi.com/acg',
-        
+
         // 左上角网站名称配置
         siteName: {
           // 是否显示网站名称
@@ -153,7 +161,7 @@ window.EZ_CONFIG = {
           // 文字颜色 (white或black)
           color: 'white'
         },
-        
+
         // 左下角问候语配置
         greeting: {
           // 是否显示问候语
@@ -175,16 +183,16 @@ window.EZ_CONFIG = {
 
     // 是否自动选择周期最大的标签，设为false则不会自动选择
     autoSelectMaxPeriod: false, // 默认关闭
-    
+
     // 是否隐藏周期选择标签 (true=隐藏, false=显示)
     hidePeriodTabs: false, // 默认显示周期选择标签
-    
+
     // 库存紧张的阈值（当库存数量小于等于此值且大于0时显示库存紧张）
     lowStockThreshold: 5,
-    
+
     // 是否启用周期折扣计算显示 (true=启用, false=禁用)
     enableDiscountCalculation: true, // 默认启用
-    
+
     // 价格周期的显示顺序（从大到小）
     periodOrder: [
       'three_year_price', // 三年
@@ -200,32 +208,32 @@ window.EZ_CONFIG = {
     popup: {
       // 是否启用弹窗
       enabled: true,
-      
+
       // 弹窗标题
       title: "用户须知",
-      
+
       // 弹窗内容 (支持HTML)
       content: "<p><strong>常规套餐默认每月订单日重置流量，您当月未用使用完的流量，不会累积到下个月</strong></p>",
-      
+
       // 冷却时间（小时），在此时间内不会再次显示弹窗
       cooldownHours: 0,
-      
+
       // 等待时间（秒），用户需要等待多少秒才能关闭弹窗，设为0表示无需等待
       closeWaitSeconds: 0
     }
   },
-  ORDER_CONFIG:{
-        // 下单前二次确认
-        confirmOrder:true,
-        // 下单前二次确认内容
-        confirmOrderContent:"<p><strong style='color: red'>无法提供相关教程和使用说明。</strong></p><p><strong style='color: red'>不会使用请勿购买，没有退款政策</strong></p>",
-        
-    },
+  ORDER_CONFIG: {
+    // 下单前二次确认
+    confirmOrder: true,
+    // 下单前二次确认内容
+    confirmOrderContent: "<p><strong style='color: red'>无法提供相关教程和使用说明。</strong></p><p><strong style='color: red'>不会使用请勿购买，没有退款政策</strong></p>",
+
+  },
   // 仪表盘页面配置
   DASHBOARD_CONFIG: {
     // 是否在欢迎卡片中显示用户邮箱 (true=显示, false=隐藏)
     showUserEmail: false,
-    
+
     // 是否为导入订阅按钮添加高光效果和填充底色 (true=添加效果, false=不添加效果)
     importButtonHighlightBtnbgcolor: false,
 
@@ -233,21 +241,21 @@ window.EZ_CONFIG = {
 
     // 是否启用重置流量功能 (true=启用, false=禁用)
     enableResetTraffic: true,
-    
+
     // 重置流量按钮显示条件 ('always'=始终显示, 'low'=流量低于阈值时显示, 'depleted'=流量耗尽时显示)
     resetTrafficDisplayMode: 'low',
-    
+
     // 低流量阈值百分比 (1-100)，当剩余流量百分比低于此值时触发低流量警告
     lowTrafficThreshold: 10,
 
     // ===============================
-    
+
     // 是否启用续费套餐功能 (true=启用, false=禁用)
     enableRenewPlan: true,
-    
+
     // 续费套餐按钮显示条件 ('always'=始终显示, 'expiring'=套餐即将过期时显示, 'expired'=套餐已过期时显示)
     renewPlanDisplayMode: 'always',
-    
+
     // 即将过期的天数阈值 (1-30)，当剩余天数小于等于此值时触发即将过期警告
     expiringThreshold: 7,
 
@@ -279,7 +287,7 @@ window.EZ_CONFIG = {
       linux: 'https://github.com/xxx/releases/latest',
       openwrt: 'https://github.com/xxx/releases/latest'
     },
-    
+
     // 订阅导入客户端显示控制 部分面板不支持SingBox导入请您注意检查
 
     // iOS平台
@@ -290,7 +298,7 @@ window.EZ_CONFIG = {
     showHiddifyIOS: true,
     showSingboxIOS: true,
     showLoon: true,
-    
+
     // Android平台客户端
     showFlClashAndroid: true,
     showV2rayNG: true,
@@ -300,7 +308,7 @@ window.EZ_CONFIG = {
     showNekobox: true,
     showSingboxAndroid: true,
     showHiddifyAndroid: true,
-    
+
     // Windows平台客户端
     showFlClashWindows: true,
     showClashVergeWindows: true,
@@ -308,7 +316,7 @@ window.EZ_CONFIG = {
     showNekoray: true,
     showSingboxWindows: true,
     showHiddifyWindows: true,
-    
+
     // MacOS平台客户端
     showFlClashMac: true,
     showClashVergeMac: true,
@@ -327,7 +335,7 @@ window.EZ_CONFIG = {
   PROFILE_CONFIG: {
     // 是否显示礼品卡兑换栏目 (true=显示, false=隐藏)
     showGiftCardRedeem: false, // 只有Xiao-V2board支持礼品卡兑换
-    
+
     // 是否显示最近登录设备栏目 (true=显示, false=隐藏)
     showRecentDevices: true
   },
@@ -350,13 +358,13 @@ window.EZ_CONFIG = {
   CAPTCHA_CONFIG: {
     // 验证方式: 'google' 或 'cloudflare'
     captchaType: 'google',
-    
+
     // Google reCAPTCHA 配置 默认v2版本
     google: {
       // 验证API地址，可选，默认使用官方地址
       verifyUrl: 'https://www.google.com/recaptcha/api/siteverify'
     },
-    
+
     // Cloudflare Turnstile 配置
     cloudflare: {
       // 验证API地址，可选，默认使用官方地址
@@ -370,12 +378,12 @@ window.EZ_CONFIG = {
   CUSTOM_HEADERS: {
     // 是否启用自定义标头
     enabled: false, // 默认关闭，启用前请确保服务器已配置正确的CORS策略
-    
+
     // ⚠️ CORS警告：添加自定义标头将触发浏览器的预检请求(OPTIONS)
     // 服务器必须在响应中包含Access-Control-Allow-Headers字段，并列出这些自定义标头
     // 如果您控制服务器，请确保在CORS配置中添加您的自定义标头名称
     // 例如: Access-Control-Allow-Headers: "Content-Type, Authorization, X-Custom-Header, test"
-    
+
     // 自定义标头列表
     // 格式: { "标头名称": "标头值" }
     // 例如: { "X-Custom-Header": "CustomValue" }
@@ -390,28 +398,28 @@ window.EZ_CONFIG = {
   PAYMENT_CONFIG: {
     // 是否在新标签页打开支付链接 (true=新标签页打开, false=当前页面打开)
     openPaymentInNewTab: true, // 默认开启
-    
+
     // 支付二维码大小 (像素)
     qrcodeSize: 200,
-    
+
     // 支付二维码的颜色
     qrcodeColor: '#000000',
-    
+
     // 支付二维码的背景色
     qrcodeBackground: '#ffffff',
-    
+
     // 是否自动检测支付状态 (true=启用自动检测, false=手动检测)
     autoCheckPayment: true, // 默认启用
-    
+
     // 自动检测支付状态的间隔时间 (毫秒)
     autoCheckInterval: 5000, // 默认5秒
-    
+
     // 自动检测支付状态的最大次数 (设置为0表示无限次)
     autoCheckMaxTimes: 60, // 默认60次
-    
+
     // 是否对Safari浏览器使用支付弹窗模式，而不是直接跳转 (true=使用弹窗, false=直接跳转)
     useSafariPaymentModal: true, // 默认开启
-    
+
     // 是否自动选择第一个支付方式 (true=自动选择, false=需要用户手动选择)
     // 开启后，用户进入支付页面时将自动选择列表中的第一个支付方式，无需手动点击选择
     autoSelectFirstMethod: true  // 默认开启
@@ -421,16 +429,16 @@ window.EZ_CONFIG = {
   WALLET_CONFIG: {
     // 预设充值金额选项（单位：元）
     presetAmounts: [6, 30, 68, 128, 256, 328, 648, 1280],
-    
+
     // 默认选中的充值金额（如果设为null则不预选金额）
     defaultSelectedAmount: null,
-    
+
     // 最小充值金额（单位：元）
     minimumDepositAmount: 1
   },
 
   // =======================================================
-  
+
   // 邀请页面配置
   INVITE_CONFIG: {
     // 是否在导航栏的邀请按钮上显示返利标记
@@ -454,7 +462,7 @@ window.EZ_CONFIG = {
   BROWSER_RESTRICT_CONFIG: {
     // 是否启用浏览器限制功能
     enabled: true,
-    
+
     // 各浏览器是否被限制访问（true=限制访问，false=允许访问）
     restrictBrowsers: {
       '360': true,     // 360浏览器
@@ -465,7 +473,7 @@ window.EZ_CONFIG = {
       'UC': false,     // UC浏览器
       'Maxthon': false // 傲游浏览器
     },
-    
+
     // 推荐下载的浏览器链接
     recommendedBrowsers: {
       'Chrome': 'https://www.google.cn/chrome/',
@@ -496,41 +504,41 @@ window.EZ_CONFIG = {
   TRAFFICLOG_CONFIG: {
     // 是否启用流量明细页面 (true=启用, false=禁用)
     enableTrafficLog: true, // 默认启用
-    
+
     // 显示多少天的流量记录
     daysToShow: 30 // 默认显示30天
   },
-  
+
   // 节点列表配置
   NODES_CONFIG: {
     // 是否显示节点倍率 (true=显示, false=隐藏，若此处为false则allowViewNodeInfo也会为false)
     showNodeRate: true,
-    
+
     // 是否显示节点详细信息（主机和端口）
     showNodeDetails: false,
-    
+
     // 是否允许查看节点详细信息（控制详情按钮和模态框）
-    allowViewNodeInfo: true 
+    allowViewNodeInfo: true
   },
 
   // 客服系统配置
   CUSTOMER_SERVICE_CONFIG: {
     // 是否启用客服系统
     enabled: false,
-    
+
     // 客服系统类型: 'crisp' 或 'other'
     // 注意：当客服类型为crisp时，系统会自动向Crisp传递用户数据
     // 包括：用户邮箱、套餐名称、到期时间、可用流量、用户余额
     type: 'crisp',
-    
+
     // 客服系统JS代码，请将您的客服系统提供的嵌入代码粘贴在这里
     customHtml: '',
-    
+
     // 客服系统嵌入模式: 'popup'=弹出式页面, 'embed'=嵌入到每个页面
     // 'popup'模式: 点击客服图标会跳转到单独的客服页面
     // 'embed'模式: 客服窗口直接嵌入到每个页面中(仅支持Crisp)
     embedMode: 'embed',
-    
+
     // 是否在未登录状态下也显示客服图标
     showWhenNotLoggedIn: true,
 
@@ -548,12 +556,12 @@ window.EZ_CONFIG = {
       }
     }
   },
-  
+
   // More页面自定义卡片配置
   MORE_PAGE_CONFIG: {
     // 是否启用自定义卡片功能
     enableCustomCards: false,
-    
+
     // 自定义卡片列表
     // 说明:
     // 1. 每个卡片必须有唯一的id、标题、描述和URL
