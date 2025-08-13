@@ -643,9 +643,10 @@ export default {
         description: '邀请好友注册使用，获取佣金收入',
         stats: {
             registeredUsers: '已注册用户数',
+            validCommission: '累计获得佣金',
             pendingCommission: '确认中的佣金',
-            availableCommission: '累计获得佣金',
-            commissionRate: '佣金比例'
+            commissionRate: '佣金比例',
+            availableCommission: '当前剩余佣金'
         },
         rules: {
             title: '返佣规则',
@@ -836,7 +837,8 @@ export default {
     wallet: {
         balance: {
             title: '账户余额',
-            description: '充值后的余额仅限消费'
+            description: '充值后的余额仅限消费',
+            autorenew: '自动续费'
         },
         deposit: {
             title: '充值余额',

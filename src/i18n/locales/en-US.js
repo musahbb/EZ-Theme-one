@@ -1,4 +1,4 @@
-﻿import {SITE_CONFIG} from '../../utils/baseConfig';
+﻿import { SITE_CONFIG } from '../../utils/baseConfig';
 
 export default {
     common: {
@@ -195,9 +195,9 @@ export default {
         purchasePlan: 'Purchase Plan',
         resetTraffic: 'Reset Traffic',
         activateDataCycleInAdvance: 'Activate data cycle in advance',
-        resetDataCycleNotice:'Clicking "Got it" will deduct the remaining subscription time of the current data cycle. The system will reset your used data.',
-        nextPeriodError:'Failed to start next month early',
-        nextPeriodSuccess:'Successfully started next month early',
+        resetDataCycleNotice: 'Clicking "Got it" will deduct the remaining subscription time of the current data cycle. The system will reset your used data.',
+        nextPeriodError: 'Failed to start next month early',
+        nextPeriodSuccess: 'Successfully started next month early',
         renewPlan: 'Renew Plan',
         noPlanToRenew: 'No plan available for renewal',
         resetTrafficConfirm: 'Confirm Traffic Reset',
@@ -559,7 +559,7 @@ export default {
         no_plan_selected: 'No plan selected',
         plan_not_found: 'Plan not found',
         failed_to_fetch_plan: 'Failed to fetch plan information',
-        confirm_purchase:'Confirm Purchase'
+        confirm_purchase: 'Confirm Purchase'
     },
     payment: {
         title: 'Pay Order',
@@ -643,9 +643,10 @@ export default {
         description: 'Invite friends to register and use, earn commission income.',
         stats: {
             registeredUsers: 'Registered Users',
-            pendingCommission: 'Pending Commissions',
-            availableCommission: 'Total Earned Commissions',
-            commissionRate: 'Commission Rate'
+            validCommission: 'Total Commission Earned',
+            pendingCommission: 'Pending Commission',
+            commissionRate: 'Commission Rate',
+            availableCommission: 'Available Commission'
         },
         rules: {
             title: 'Commission Rules',
@@ -836,7 +837,8 @@ export default {
     wallet: {
         balance: {
             title: 'Account Balance',
-            description: 'Deposited balance can only be used for spending'
+            description: 'Deposited balance can only be used for spending',
+            autorenew: 'Auto-renewal'
         },
         deposit: {
             title: 'Deposit Balance',

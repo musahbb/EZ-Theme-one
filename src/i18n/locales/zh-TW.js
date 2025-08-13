@@ -109,7 +109,7 @@ export default {
     passwordMatchError: '兩次輸入的密碼不一致',
     captchaSuccess: '人機驗證成功',
     captchaFailed: '人機驗證失敗',
-    
+
     loginNow: '立即登入',
     resetNow: '重設密碼',
     alreadyHaveAccount: '已有帳戶？',
@@ -212,7 +212,7 @@ export default {
     deviceLimit: '線上設備',
     unlimited: '不限制',
     nextResetTime: '下次重設時間',
-    
+
     importTitle: '選擇匯入方式',
     copySubscription: '複製訂閱地址',
     copySubscriptionDesc: '複製訂閱連結到剪貼簿',
@@ -316,11 +316,11 @@ export default {
   tickets: {
     title: '工單系統',
     description: '與我們的支援團隊聯繫',
-    
+
     searchPlaceholder: '搜尋工單...',
     newTicket: '新建工單',
     createNew: '建立工單',
-    
+
     subject: '主題',
     subjectPlaceholder: '請輸入工單主題',
     message: '內容',
@@ -329,30 +329,30 @@ export default {
     levelLow: '低',
     levelMedium: '中',
     levelHigh: '高',
-    
+
     statusOpen: '處理中',
     statusClosed: '已關閉',
-    
+
     noTickets: '暫無工單',
     selectTicket: '請選擇工單檢視詳情',
     noMessages: '暫無訊息記錄',
     loadingMessages: '正在載入訊息...',
     loadingTickets: '載入工單中...',
-    
+
     formIncomplete: '請填寫完整的工單資訊',
     createSuccess: '工單建立成功',
     createError: '工單建立失敗',
     fetchError: '取得工單列表失敗',
     fetchDetailError: '取得工單詳情失敗',
-    
+
     replyPlaceholder: '請輸入回覆內容...',
     send: '傳送',
     replySent: '回覆已傳送',
     replyError: '回覆傳送失敗',
-    
+
     admin: '客服',
     you: '我',
-    
+
     closeTicket: '關閉工單',
     closeConfirmTitle: '確認關閉工單',
     closeConfirmText: '您確定要關閉此工單？關閉後無法繼續回覆。',
@@ -360,13 +360,13 @@ export default {
     closeError: '關閉工單失敗',
     ticketClosed: '此工單已關閉，無法回覆',
     closing: '關閉中...',
-    
+
     createdAt: '建立時間',
-    
+
     smallScreenNotice: '偵測到小螢幕設備',
     switchToMobile: '為獲得更好的體驗，建議切換到行動端視圖',
     switchToMobileView: '切換到行動端視圖',
-    
+
     largeScreenNotice: '偵測到較大螢幕',
     switchToDesktop: '建議使用電腦端工單頁面以獲得更好的體驗',
     switchToDesktopView: '切換到電腦端視圖'
@@ -634,9 +634,10 @@ export default {
     description: '邀請好友註冊使用，獲取佣金收入',
     stats: {
       registeredUsers: '已註冊用戶數',
+      validCommission: '累計獲得佣金',
       pendingCommission: '確認中的佣金',
-      availableCommission: '累計獲得佣金',
-      commissionRate: '佣金比例'
+      commissionRate: '佣金比例',
+      availableCommission: '當前剩餘佣金'
     },
     rules: {
       title: '返佣規則',
@@ -827,7 +828,8 @@ export default {
   wallet: {
     balance: {
       title: '帳戶餘額',
-      description: '充值後的餘額僅限消費'
+      description: '充值後的餘額僅限消費',
+      autorenew: '自動續費'
     },
     deposit: {
       title: '充值餘額',

@@ -109,7 +109,7 @@ export default {
     passwordMatchError: '입력한 비밀번호가 일치하지 않습니다',
     captchaSuccess: '인증 성공',
     captchaFailed: '인증 실패',
-    
+
     loginNow: '지금 로그인',
     resetNow: '비밀번호 재설정',
     alreadyHaveAccount: '이미 계정이 있으신가요?',
@@ -212,7 +212,7 @@ export default {
     deviceLimit: '온라인 기기',
     unlimited: '무제한',
     nextResetTime: '다음 초기화 시간',
-    
+
     importTitle: '가져오기 방식 선택',
     copySubscription: '구독 주소 복사',
     copySubscriptionDesc: '구독 링크를 클립보드에 복사',
@@ -316,11 +316,11 @@ export default {
   tickets: {
     title: '티켓 시스템',
     description: '지원 팀과 연락하세요',
-    
+
     searchPlaceholder: '티켓 검색...',
     newTicket: '새 티켓',
     createNew: '티켓 생성',
-    
+
     subject: '제목',
     subjectPlaceholder: '티켓 제목을 입력하세요',
     message: '내용',
@@ -329,30 +329,30 @@ export default {
     levelLow: '낮음',
     levelMedium: '중간',
     levelHigh: '높음',
-    
+
     statusOpen: '처리 중',
     statusClosed: '종료됨',
-    
+
     noTickets: '티켓 없음',
     selectTicket: '티켓을 선택하여 자세히 보세요',
     noMessages: '메시지 기록 없음',
     loadingMessages: '메시지 로딩 중...',
     loadingTickets: '티켓 로딩 중...',
-    
+
     formIncomplete: '티켓 정보를 완전히 입력하세요',
     createSuccess: '티켓 생성 성공',
     createError: '티켓 생성 실패',
     fetchError: '티켓 목록 가져오기 실패',
     fetchDetailError: '티켓 상세 정보 가져오기 실패',
-    
+
     replyPlaceholder: '답변 내용을 입력하세요...',
     send: '전송',
     replySent: '답변이 전송되었습니다',
     replyError: '답변 전송 실패',
-    
+
     admin: '고객 지원',
     you: '나',
-    
+
     closeTicket: '티켓 종료',
     closeConfirmTitle: '티켓 종료 확인',
     closeConfirmText: '이 티켓을 종료하시겠습니까? 종료 후에는 답변을 추가할 수 없습니다.',
@@ -360,17 +360,17 @@ export default {
     closeError: '티켓 종료 실패',
     ticketClosed: '이 티켓은 종료되어 답변할 수 없습니다',
     closing: '종료 중...',
-    
+
     createdAt: '생성 시간',
-    
+
     smallScreenNotice: '소형 화면 기기 감지됨',
     switchToMobile: '더 나은 경험을 위해 모바일 뷰로 전환하세요',
     switchToMobileView: '모바일 뷰로 전환',
-    
+
     largeScreenNotice: '대형 화면 감지됨',
     switchToDesktop: '더 나은 경험을 위해 데스크톱 티켓 페이지를 사용하세요',
     switchToDesktopView: '데스크톱 뷰로 전환',
-    
+
     popup: {
       close_btn: '닫기',
       wait_close_btn: '{seconds}초 후 닫기'
@@ -639,9 +639,10 @@ export default {
     description: '친구를 초대하여 등록하고 커미션 수익을 얻으세요.',
     stats: {
       registeredUsers: '등록된 사용자 수',
+      validCommission: '누적 획득 커미션',
       pendingCommission: '확인 중인 커미션',
-      availableCommission: '누적 커미션',
-      commissionRate: '커미션 비율'
+      commissionRate: '커미션 비율',
+      availableCommission: '현재 남은 커미션'
     },
     rules: {
       title: '커미션 규칙',
@@ -832,7 +833,8 @@ export default {
   wallet: {
     balance: {
       title: '계정 잔액',
-      description: '충전된 잔액은 소비 전용입니다'
+      description: '충전된 잔액은 소비 전용입니다',
+      autorenew: '자동 갱신'
     },
     deposit: {
       title: '잔액 충전',

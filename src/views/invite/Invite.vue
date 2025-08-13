@@ -75,8 +75,8 @@
             <IconWallet :size="32" />
           </div>
           <div class="stats-info">
-              <div class="stats-value">{{ currencySymbol }}{{ inviteStats.availableCommission }}</div>
-            <div class="stats-label">{{ $t('invite.stats.availableCommission') }}</div>
+              <div class="stats-value">{{ currencySymbol }}{{ inviteStats.validCommission }}</div>
+            <div class="stats-label">{{ $t('invite.stats.validCommission') }}</div>
           </div>
         </div>
         
@@ -421,12 +421,12 @@
             </div>
             
             <div class="share-buttons mt-3">
-              <button class="btn-outline wechat-btn" @click="shareToWechat">
+              <!-- <button class="btn-outline wechat-btn" @click="shareToWechat">
                 <IconBrandWechat class="btn-icon" /> {{ $t('invite.share.wechat') }}
               </button>
               <button class="btn-outline qq-btn" @click="shareToQQ">
                 <IconBrandQq class="btn-icon" /> {{ $t('invite.share.qq') }}
-              </button>
+              </button> -->
               <button class="btn-outline twitter-btn" @click="shareToTwitter">
                 <IconBrandTwitter class="btn-icon" /> {{ $t('invite.share.twitter') }}
               </button>
@@ -2579,6 +2579,7 @@ export default {
 }
 
 .modal-content {
+  transform: translateZ(0);
   background-color: var(--card-background);
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);

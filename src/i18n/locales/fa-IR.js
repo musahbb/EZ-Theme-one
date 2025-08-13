@@ -109,7 +109,7 @@ export default {
     passwordMatchError: 'پسورد ها مطابقت ندارند',
     captchaSuccess: 'تایید انسان موفق',
     captchaFailed: 'تایید انسان شکست خورد',
-    
+
     loginNow: 'اکنون وارد شوید',
     resetNow: 'پسورد را بازنشانی کنید',
     alreadyHaveAccount: 'حساب دارید؟',
@@ -212,7 +212,7 @@ export default {
     deviceLimit: 'دستگاه های آنلاین',
     unlimited: 'نامحدود',
     nextResetTime: 'زمان بازنشانی بعدی',
-    
+
     importTitle: 'انتخاب روش وارد کردن',
     copySubscription: 'کپی لینک اشتراک',
     copySubscriptionDesc: 'لینک اشتراک را به کلیپ بورد کپی کنید',
@@ -316,11 +316,11 @@ export default {
   tickets: {
     title: 'سیستم تیکت',
     description: 'با تیم پشتیبانی تماس بگیرید',
-    
+
     searchPlaceholder: 'جستجوی تیکت...',
     newTicket: 'تیکت جدید',
     createNew: 'ایجاد تیکت',
-    
+
     subject: 'موضوع',
     subjectPlaceholder: 'موضوع تیکت را وارد کنید',
     message: 'محتوا',
@@ -329,30 +329,30 @@ export default {
     levelLow: 'پایین',
     levelMedium: 'متوسط',
     levelHigh: 'بالا',
-    
+
     statusOpen: 'در حال پردازش',
     statusClosed: 'بسته شد',
-    
+
     noTickets: 'تیکتی موجود نیست',
     selectTicket: 'تیکت را برای نمایش جزئیات انتخاب کنید',
     noMessages: 'پیامی موجود نیست',
     loadingMessages: 'در حال بارگذاری پیام ها...',
     loadingTickets: 'در حال بارگذاری تیکت ها...',
-    
+
     formIncomplete: 'اطلاعات تیکت را کامل کنید',
     createSuccess: 'تیکت ایجاد شد',
     createError: 'ایجاد تیکت شکست خورد',
     fetchError: 'دریافت لیست تیکت شکست خورد',
     fetchDetailError: 'دریافت جزئیات تیکت شکست خورد',
-    
+
     replyPlaceholder: 'محتوای پاسخ را وارد کنید...',
     send: 'ارسال',
     replySent: 'پاسخ ارسال شد',
     replyError: 'ارسال پاسخ شکست خورد',
-    
+
     admin: 'پشتیبانی',
     you: 'من',
-    
+
     closeTicket: 'بستن تیکت',
     closeConfirmTitle: 'تایید بستن تیکت',
     closeConfirmText: 'آیا مطمئن هستید که می خواهید تیکت را ببندید؟ پس از بسته شدن نمی توانید پاسخ دهید',
@@ -360,13 +360,13 @@ export default {
     closeError: 'بستن تیکت شکست خورد',
     ticketClosed: 'این تیکت بسته شد، نمی توانید پاسخ دهید',
     closing: 'در حال بسته شدن...',
-    
+
     createdAt: 'زمان ایجاد',
-    
+
     smallScreenNotice: 'دستگاه با صفحه کوچک تشخیص داده شد',
     switchToMobile: 'برای تجربه بهتر به حالت موبایل سوئیچ کنید',
     switchToMobileView: 'سوئیچ به حالت موبایل',
-    
+
     largeScreenNotice: 'دستگاه با صفحه بزرگ تشخیص داده شد',
     switchToDesktop: 'برای تجربه بهتر به حالت دسکتاپ سوئیچ کنید',
     switchToDesktopView: 'سوئیچ به حالت دسکتاپ',
@@ -637,10 +637,12 @@ export default {
     title: 'کمیسیون من',
     description: 'دوستان را دعوت کنید و کمیسیون کسب کنید',
     stats: {
-      registeredUsers: 'تعداد کاربران ثبت شده',
-      pendingCommission: 'کمیسیون در حال تایید',
-      availableCommission: 'کمیسیون کسب شده',
-      commissionRate: 'نرخ کمیسیون'
+      registeredUsers: 'کاربران ثبت‌نام‌شده',
+      validCommission: 'کل کمیسیون کسب شده',
+      pendingCommission: 'کمیسیون در انتظار',
+      commissionRate: 'نرخ کمیسیون',
+      availableCommission: 'کمیسیون موجود',
+      autorenew: 'تمدید خودکار'
     },
     rules: {
       title: 'قوانین کمیسیون',
