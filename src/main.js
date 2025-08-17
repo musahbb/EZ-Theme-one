@@ -5,18 +5,23 @@ const enableConfigJS = process.env.VUE_APP_CONFIGJS == "true";
 const enableAntiDebugging = process.env.VUE_APP_DEBUGGING == "true";
 
 (async () => {
-  if (!isProd || !enableConfigJS) {
-    import('./config/index.js').then((res) => {
+  try {
+    if (!isProd || !enableConfigJS) {
+      const res = await import('./config/index.js');
       if (typeof window !== 'undefined') {
-        window.EZ_CONFIG = res.config || res;
+        window.EZ_CONFIG = res.config || res.default || res;
       }
-    });
+    }
+    
+    // 反调试逻辑
+    if (isProd && enableAntiDebugging) {
+      disableDevtool()
+    }
+    
+    // ⚠️ 确保在 config 加载后再初始化应用
+    await import('./appInit.js');
+  } catch (error) {
+    console.error(error);
   }
-  
-  // 打包后开启反调试逻辑
-  if(isProd && enableAntiDebugging) {
-    disableDevtool()
-  }
-  
-  await import('./appInit.js');
 })();
+
